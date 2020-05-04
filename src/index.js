@@ -1,4 +1,4 @@
-document.write('44444555');
+document.write(process.env.PUBLIC_PATH,process.env.PUBLIC_API);
 const img = document.createElement('img');
 img.setAttribute('id','img');
 img.setAttribute('src',require('@/src/static/imgs/custom-add.png'));
@@ -8,5 +8,4 @@ img1.setAttribute('id','img1');
 img1.setAttribute('src',require('@/src/static/imgs/icon_error_red.svg'));
 document.body.appendChild(img1);
 import ('@/src/style/index.less');
-console.log(4444);
 // 555

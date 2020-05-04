@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const Path = require('path');
 const resolvePath = dir=> Path.join(__dirname,'..',dir);
 const { NODE_MODE, NODE_ENV } = process.env;
 const isProdcution = NODE_MODE === 'production'? true: false;
-
+const envConfig = require(resolvePath('config/index.js'))[NODE_ENV];
 const baseConfig = {
     mode: process.env.NODE_MODE,
     devtool: !isProdcution? 'source-map':'none',
@@ -14,7 +15,7 @@ const baseConfig = {
     },
     output:{
         path: resolvePath('dist'),
-        filename: 'static/js/[name].[hash:7].js',
+        filename: 'static/js/[name].[hash:7].js'
     },
     devServer:{
         contentBase: resolvePath('dist'),
@@ -72,6 +73,7 @@ const baseConfig = {
                 minifyCSS: true, // 压缩html里的css（使用clean-css进行的压缩）
             }
         }),
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             {
                 from: resolvePath('public'),
@@ -83,5 +85,6 @@ const baseConfig = {
 
 module.exports = {
     resolvePath,
-    baseConfig
+    baseConfig,
+    envConfig
 }

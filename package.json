@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_MODE=development NODE_ENV=dev webpack-dev-server --config build/webpack.develop.js",
-    "build:dev": "cross-env NODE_MODE=production NODE_ENV=dev webpack --config build/webpack.build.js"
+    "test": "cross-env NODE_MODE=development NODE_ENV=test webpack-dev-server --config build/webpack.develop.js",
+    "prod": "cross-env NODE_MODE=development NODE_ENV=prod webpack-dev-server --config build/webpack.develop.js",
+    "build:dev": "cross-env NODE_MODE=development NODE_ENV=dev webpack --config build/webpack.build.js",
+    "build:test": "cross-env NODE_MODE=development NODE_ENV=test webpack --config build/webpack.build.js",
+    "build:prod": "cross-env NODE_MODE=production NODE_ENV=prod webpack --config build/webpack.build.js"
   },
   "keywords": [],
   "author": "",

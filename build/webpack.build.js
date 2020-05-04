@@ -1,12 +1,15 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ZipWebpackPlugin = require('zip-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressWebpackPlugin = require('compression-webpack-plugin');
+const Webpack = require('webpack');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const { resolvePath,baseConfig } = require('./webpack.base.js');
+const { resolvePath,baseConfig,envConfig } = require('./webpack.base.js');
 const config = {
+    output:{
+        publicPath: envConfig['PUBLIC_PATH']
+    },
     optimization:{
         splitChunks:{
             chunks: 'all',
@@ -51,11 +54,13 @@ const config = {
         ]
     },
     plugins:[
+        new Webpack.DefinePlugin({
+            'process.env': JSON.stringify(envConfig)
+        }),
         new MiniCssExtractPlugin({
             filename: "static/css/[name].[hash:7].css",
             chunkFilename: "static/css/[id].[hash:7].css"
         }),
-        new CleanWebpackPlugin(),
         new ZipWebpackPlugin({
             path: resolvePath(''),
             filename: 'dist.zip'
