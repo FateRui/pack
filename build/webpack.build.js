@@ -12,21 +12,18 @@ const config = {
     },
     optimization:{
         splitChunks:{
-            chunks: 'all',
-            minSize: 30 * 1024,
-            maxSize: 500* 1024,
+            chunks: 'initial',
+            minSize: 300 * 1024,
+            maxSize: 500 * 1024,
             cacheGroups: {
                 vendor: {
                     test: /\/node_modules\//,
                     minChunks: 2,
-                    chunks: 'all',
                     name: 'vendor'
                 },
                 styles:{
                     test: /\.(css)$/,
                     minChunks: 1,
-                    minSize: 30* 1024,
-                    maxSize: 500 * 1024,
                     name: 'style'
                 }
             }
@@ -58,8 +55,8 @@ const config = {
             'process.env': JSON.stringify(envConfig)
         }),
         new MiniCssExtractPlugin({
-            filename: "static/css/[name].[hash:7].css",
-            chunkFilename: "static/css/[id].[hash:7].css"
+            filename: "static/css/[name].css",
+            chunkFilename: "static/css/[name]~[id].css"
         }),
         new ZipWebpackPlugin({
             path: resolvePath(''),

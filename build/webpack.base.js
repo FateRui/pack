@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
+const { VueLoaderPlugin }= require('vue-loader');
 const Path = require('path');
 const resolvePath = dir=> Path.join(__dirname,'..',dir);
 const { NODE_MODE, NODE_ENV } = process.env;
@@ -29,10 +29,13 @@ const baseConfig = {
     },
     resolve:{
         alias: {
-            '@': resolvePath('')
+            '@': resolvePath('/src')
         },
         extensions: ['.js','.vue'],
         modules:[resolvePath('node_modules')]
+    },
+    performance: {
+        hints:false 
     },
     module:{
         rules:[
@@ -40,6 +43,10 @@ const baseConfig = {
                 test: /\.js$/,
                 exclude: [resolvePath('/node_modules')],
                 use: 'babel-loader'
+            },
+            {
+                test: /\.vue$/,
+                use: 'vue-loader'
             },
             {
                 test: /\.(png|svg|gif|bmp|jpg|jpeg)$/,
@@ -59,6 +66,7 @@ const baseConfig = {
                 use: [
                     {   loader: 'file-loader',
                         options:{
+                            limit: 30 * 1024,
                             name: 'static/fonts/[name].[hash:7].[ext]'
                         }
                     }
@@ -78,6 +86,7 @@ const baseConfig = {
                 minifyCSS: true, // 压缩html里的css（使用clean-css进行的压缩）
             }
         }),
+        new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             {
