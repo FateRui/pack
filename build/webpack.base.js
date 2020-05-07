@@ -37,6 +37,11 @@ const baseConfig = {
     module:{
         rules:[
             {
+                test: /\.js$/,
+                exclude: [resolvePath('/node_modules')],
+                use: 'babel-loader'
+            },
+            {
                 test: /\.(png|svg|gif|bmp|jpg|jpeg)$/,
                 use: [
                     {

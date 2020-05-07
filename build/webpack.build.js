@@ -5,7 +5,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CompressWebpackPlugin = require('compression-webpack-plugin');
 const Webpack = require('webpack');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const { resolvePath,baseConfig,envConfig } = require('./webpack.base.js');
+const { resolvePath,baseConfig,envConfig,isProdcution } = require('./webpack.base.js');
 const config = {
     output:{
         publicPath: envConfig['PUBLIC_PATH']
@@ -25,7 +25,7 @@ const config = {
                 styles:{
                     test: /\.(css)$/,
                     minChunks: 1,
-                    minSize: 0* 1024,
+                    minSize: 30* 1024,
                     maxSize: 500 * 1024,
                     name: 'style'
                 }
@@ -65,13 +65,17 @@ const config = {
             path: resolvePath(''),
             filename: 'dist.zip'
         }),
+        new BundleAnalyzerPlugin()
+    ]
+}
+// 如果是生产模式，配置gzip压缩
+if(isProdcution){
+    config.plugins.push(
         new CompressWebpackPlugin({
             test: /\.(js|css)$/,
             // threshold: 10240,
             minRatio: 0.8
-        }),
-        new BundleAnalyzerPlugin()
-    ]
+        })
+    )
 }
-
 module.exports = webpackMerge(baseConfig,config);

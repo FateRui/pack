@@ -1,4 +1,4 @@
-const { resolvePath,baseConfig,envConfig } = require('./webpack.base.js');
+const { resolvePath,baseConfig,envConfig,isProdcution } = require('./webpack.base.js');
 const webpackMerge = require('webpack-merge');
 const Webpack = require('webpack');
 // 如果是本地开发，那么public设为／为好
