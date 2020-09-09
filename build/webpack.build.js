@@ -64,8 +64,7 @@ const config = {
         new ZipWebpackPlugin({
             path: resolvePath(''),
             filename: 'dist.zip'
-        }),
-        new BundleAnalyzerPlugin()
+        })
     ]
 }
 // 如果是生产模式，配置gzip压缩
